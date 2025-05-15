@@ -1,3 +1,9 @@
+######################################################################################################################################################
+#ACDNN-CNNs are a specialized type of CNN which divides the network into hierarchical sub-networks of increasing complexity.
+#Each sub-network produces a separate prediction. All predictions attempt to predict the same target, but have different numbers of parameters
+#The network therefore learns to make predictions using many different levels of model complexity, all in a single model
+######################################################################################################################################################
+
 import numpy as np
 import pandas as pd
 import torch
@@ -21,9 +27,9 @@ def restrict_info(x, is_training, std=0.01):
         x = x + noise
     return x
 
-###############
+######################################################################################################################################################
 #ACDNN1D
-###############
+######################################################################################################################################################
 
 class ResBlock1D(nn.Module):
     def __init__(self, n_hidden, n_out=None, group_size=1):
@@ -121,6 +127,17 @@ class ResBlocks1D(nn.Module):
             
         return x
 
+############################################################################################################################
+#Accepts 1D inputs such as time-series sequences
+#in_channels = number of channels in input
+#starting_channels = number of channels in the first block of the ACDNN residual block, number of channels are doubled after each downsampling up to max_channels
+#max_channels = the max number of allowed channels, see above
+#n_out = number of outputs per head (number of classes)
+#blocks = number of residual blocks
+#blocks_per_level = number of blocks before a downsampling/channel doubling operation
+#group size = number of nodes in each distinct path/sub-network
+#random_input_mask = T/F if T randomly masks part of the input during training, useful for interpretation later
+##########################################################################################################################
 class ACDNN1D(nn.Module):
     def __init__(self, in_channels=7, starting_channels=8, max_channels=256, n_out=1, blocks=8, blocks_per_level=1, group_size=1, random_input_mask=False):
         super(ACDNN1D, self).__init__()
@@ -155,9 +172,9 @@ class ACDNN1D(nn.Module):
         
         return x
 
-###############
+######################################################################################################################################################
 #ACDNN2D
-###############
+######################################################################################################################################################
 
 def make_non_uniform_alphas2d(x, smoothing_ratio=0.01, return_probability_dist=True):
     device = x.device
@@ -283,6 +300,17 @@ class ResBlocks2D(nn.Module):
             
         return x
 
+############################################################################################################################
+#Accepts 2D inputs such as medical images (color images are also accepted)
+#in_channels = number of channels in input
+#starting_channels = number of channels in the first block of the ACDNN residual block, number of channels are doubled after each downsampling up to max_channels
+#max_channels = the max number of allowed channels, see above
+#n_out = number of outputs per head (number of classes)
+#blocks = number of residual blocks
+#blocks_per_level = number of blocks before a downsampling/channel doubling operation
+#group size = number of nodes in each distinct path/sub-network
+#random_input_mask = T/F if T randomly masks part of the input during training, useful for interpretation later
+##########################################################################################################################
 class ACDNN2D(nn.Module):
     def __init__(self, in_channels=7, starting_channels=8, max_channels=256, n_out=1, blocks=8, blocks_per_level=1, group_size=1, random_input_mask=False):
         super(ACDNN2D, self).__init__()
@@ -318,9 +346,9 @@ class ACDNN2D(nn.Module):
         return x
 
 
-###############
+######################################################################################################################################################
 #ACDNN3D
-###############
+######################################################################################################################################################
 
 def make_non_uniform_alphas3d(x, smoothing_ratio=0.01, return_probability_dist=True):
     device = x.device
@@ -446,8 +474,19 @@ class ResBlocks3D(nn.Module):
             
         return x
 
+############################################################################################################################
+#Accepts 3D inputs such as CT scans
+#in_channels = number of channels in input
+#starting_channels = number of channels in the first block of the ACDNN residual block, number of channels are doubled after each downsampling up to max_channels
+#max_channels = the max number of allowed channels, see above
+#n_out = number of outputs per head (number of classes)
+#blocks = number of residual blocks
+#blocks_per_level = number of blocks before a downsampling/channel doubling operation
+#group size = number of nodes in each distinct path/sub-network
+#random_input_mask = T/F if T randomly masks part of the input during training, useful for interpretation later
+##########################################################################################################################
 class ACDNN3D(nn.Module):
-    def __init__(self, in_channels=7, starting_channels=8, max_channels=256, n_out=1, blocks=8, group_size=1, random_input_mask=False):
+    def __init__(self, in_channels=7, starting_channels=8, max_channels=256, n_out=1, blocks=8, blocks_per_level=1, group_size=1, random_input_mask=False):
         super(ACDNN3D, self).__init__()
         self.group_size = group_size
         self.random_input_mask = random_input_mask
@@ -458,7 +497,8 @@ class ACDNN3D(nn.Module):
                 out_features=n_out,
                 starting_channels=starting_channels,
                 max_channels=max_channels,
-                group_size=group_size)
+                group_size=group_size,
+                blocks_per_level=blocks_per_level)
 
         self.n_outputs = self.encoder.current_channels//group_size
 
