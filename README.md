@@ -10,6 +10,7 @@ For use in CNNs, the ACDNN connective restriction is modified to work in the cha
 ![ACDNN-CNN Architecture](resources/figure2.png)
 
 ## ACDNN Training
+The image below shows shows the training and testing loss of a trained ACDNN. Training loss (left) quickly decreases as sub-networks (paths) become more complex. Testing loss (center) however decreases to a point and then rapidly increases again as more complexity is allowed. Best performance is obtained by using the optimal amount of model complexity.
 ![ACDNN Training](resources/figure3.png)
 
 ## USAGE
