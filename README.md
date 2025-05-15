@@ -1,8 +1,8 @@
 # ACDNN
-Adaptive Complexity Deep Neural Networks: A CNN architecture designed specifically to avoid overfitting on small datasets. Intended for small 1D, 2D, and 3D datasets.
+Adaptive Complexity Deep Neural Networks: A CNN architecture designed specifically to avoid overfitting on small biomedical datasets. Intended for small 1D, 2D, and 3D datasets.
 
 ## ARCHITECTURE
-ACDNNs simultaneously are broken into overlapping sub-networks which each make separate predictions. Simple sub-networks struggle to fit the data but do not overfit. Complex sub-networks easily fit the data but may overfit. This allows ACDNNs to learn to solve the problem at many different complexity levels simultaneously. The amount of model complexity which generalizes the best can then be identified at evaluation time.
+ACDNNs simultaneously are broken into overlapping sub-networks which each make separate predictions. Simple sub-networks struggle to fit the data but do not overfit. Complex sub-networks easily fit the data but may overfit. This allows ACDNNs to learn to solve the problem at many different complexity levels simultaneously. The amount of model complexity which generalizes best can then be identified at evaluation time, rather than trying to guess it before training begins.
 ![ACDNN Architecture](resources/figure1.png)
 
 ## ARCHITECTURE AS A CNN
