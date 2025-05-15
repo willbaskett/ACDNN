@@ -11,3 +11,6 @@ For use in CNNs, the ACDNN connective restriction is modified to work in the cha
 
 ## ACDNN Training
 ![ACDNN Training](resources/figure3.png)
+
+## USAGE
+See [the demo notebook](ACDNN-CNN-3D-demo.ipynb) for an example of usage.
