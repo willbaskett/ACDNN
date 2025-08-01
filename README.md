@@ -1,7 +1,7 @@
 # ACDNN
 Adaptive Complexity Deep Neural Networks: A specialized CNN architecture designed specifically to maximize performance on small biomedical datasets. Intended for small 1D, 2D, and 3D datasets.
 
-Published in ICHI 2025
+[Published as "https://ieeexplore.ieee.org/abstract/document/11081529" in the 2025 IEEE 13th International Conference on Healthcare Informatics (ICHI)](https://ieeexplore.ieee.org/abstract/document/11081529)
 
 ## ARCHITECTURE
 ACDNNs consist of hierarchical sub-networks which each make separate predictions. Simple sub-networks struggle to fit the data but do not overfit. Complex sub-networks easily fit the data but may also overfit, degrading performance on unseen data. This allows ACDNNs to learn to solve problems at many different levels of model complexity simultaneously. The amount of model complexity which generalizes best can then be identified at evaluation time, rather than trying to guess it before training begins.
